@@ -10,10 +10,11 @@ export class AppComponent {
 
   title = 'alurapic';
   photos: Object[] = []
-  
-  constructor(photoService: PhotoService) {
 
-    photoService.listFromUser("flavio")
+  constructor(private photoService: PhotoService) { }
+
+  ngOnInit() : void {
+    this.photoService.listFromUser("flavio")
       .subscribe(
         photos => this.photos = photos,
         err => console.log(err.message)
