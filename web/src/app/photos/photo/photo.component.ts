@@ -2,8 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'ap-photo',
-  templateUrl: './photo.component.html',
-  styleUrls: ['./photo.component.css']
+  templateUrl: './photo.component.html'
 })
 export class PhotoComponent implements OnInit {
 
