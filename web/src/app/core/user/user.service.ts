@@ -28,9 +28,8 @@ export class UserService {
   private decodeAndNotify() {
     if (this.tokenService.hasToken()) {
       const token = this.tokenService.getToken();
-      console.log(`Token: ${token}`);
+      //console.log(`Token: ${token}`);
       const user = jwt_decode(token) as User;
-      console.log(`chegou aqui`);
       this.userName = user.name;
       this.userSubject.next(user);
     }
