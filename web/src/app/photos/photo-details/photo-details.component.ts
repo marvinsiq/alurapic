@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { PhotoService } from '../photo/photo.service';
 import { Observable } from 'rxjs';
 import { Photo } from '../photo/photo';
+import { PhotoComment } from '../photo/photo-comment';
 
 @Component({
   selector: 'ap-photo-details',
@@ -11,13 +12,14 @@ import { Photo } from '../photo/photo';
 })
 export class PhotoDetailsComponent implements OnInit {
 
-  photo$: Observable<Photo>
+  photo$: Observable<Photo>;  
 
   constructor(private route: ActivatedRoute,
     private photoService: PhotoService) { }
 
   ngOnInit() {    
-    this.photo$ = this.photoService.findById(this.route.snapshot.params.id);
+    const photoId = this.route.snapshot.params.id;
+    this.photo$ = this.photoService.findById(photoId);
   }
 
 }
