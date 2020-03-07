@@ -4,6 +4,8 @@ import { Observable } from 'rxjs';
 
 import { PhotoService } from '../photo/photo.service';
 import { Photo } from '../photo/photo';
+import { AlertService } from 'src/app/shared/components/alert/alert.service';
+import { UserService } from 'src/app/core/user/user.service';
 
 @Component({
   selector: 'ap-photo-details',
@@ -16,7 +18,9 @@ export class PhotoDetailsComponent implements OnInit {
 
   constructor(private route: ActivatedRoute,
     private photoService: PhotoService,
-    private router: Router) { }
+    private router: Router,
+    private alertService: AlertService,
+    private userService: UserService) { }
 
   ngOnInit() {
     this.photoId = this.route.snapshot.params.id;
@@ -26,7 +30,14 @@ export class PhotoDetailsComponent implements OnInit {
   remove() {
     this.photoService
       .removePhoto(this.photoId)
-      .subscribe(() => this.router.navigate(['']));
+      .subscribe(() => {
+        this.alertService.success("Photo removed", true);
+        this.router.navigate(['/user', this.userService.getUserName()]);
+
+      }, error => {
+        console.log(error);
+        this.alertService.warning('Could not delete the photo!');
+      });
   }
 
 }
