@@ -7,19 +7,19 @@ import { PhotoComment } from '../photo/photo-comment';
 
 @Component({
   selector: 'ap-photo-details',
-  templateUrl: './photo-details.component.html',
-  styleUrls: [ './photo-details.component.css' ]
+  templateUrl: './photo-details.component.html'
 })
 export class PhotoDetailsComponent implements OnInit {
 
+  photoId: number;
   photo$: Observable<Photo>;  
 
   constructor(private route: ActivatedRoute,
     private photoService: PhotoService) { }
 
   ngOnInit() {    
-    const photoId = this.route.snapshot.params.id;
-    this.photo$ = this.photoService.findById(photoId);
+    this.photoId = this.route.snapshot.params.id;
+    this.photo$ = this.photoService.findById(this.photoId);
   }
 
 }

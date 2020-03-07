@@ -12,21 +12,23 @@ import { PhotoService } from '../photo/photo.service';
 export class PhotoListComponent implements OnInit {
 
   photos: Photo[] = [];
-  filter: string = "";
-  
+  filter: string = "";  
   hasMore: boolean = true;
   page: number = 1;
+  userName = "";
 
   constructor(private activatedRoute: ActivatedRoute, private photoService: PhotoService) { }
 
   ngOnInit(): void {
-    this.photos = this.activatedRoute.snapshot.data.photos;
+    this.activatedRoute.params.subscribe(params => {
+      this.userName = params.userName;
+      this.photos = this.activatedRoute.snapshot.data['photos'];
+    });
   }
 
   load() {
-    let userName = this.activatedRoute.snapshot.params.userName;
 
-    this.photoService.listFromUserPaginated(userName, ++this.page)
+    this.photoService.listFromUserPaginated(this.userName, ++this.page)
       .subscribe(photos => {
         this.filter = '';
         this.photos = this.photos.concat(photos);
