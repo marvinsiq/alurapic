@@ -12,3 +12,7 @@ body {
     height: 50vh;
     overflow-y: auto;
 }
+
+.cursor-pointer {
+    cursor: pointer;
+}
