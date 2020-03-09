@@ -6,11 +6,12 @@ import { NewUser } from './new-user';
 import { SignUpService } from './signup.service';
 import { Router } from '@angular/router';
 import { PlatformDetectorService } from 'src/app/core/platform-detector/platform-detector.service';
+import { userNamePassword } from './username-password.validator';
 
 @Component({
   selector: 'ap-signup',
   templateUrl: './signup.component.html',
-  providers: [ UserNotTakenValidatorService ]
+  providers: [UserNotTakenValidatorService]
 })
 export class SignUpComponent implements OnInit {
 
@@ -55,21 +56,29 @@ export class SignUpComponent implements OnInit {
           Validators.maxLength(14)
         ]
       ]
-    });
+    },
+      {
+        validator: userNamePassword
+      }
+    );
 
     if (this.platformDetectorService.isPlatformBrowser()) {
       this.emailInput.nativeElement.focus();
-    }    
+    }
   }
 
   signup() {
-    event.preventDefault();
-    const newUser = this.signupForm.getRawValue() as NewUser;
-    this.signUpService
-      .signup(newUser)
-      .subscribe(
-        () => this.router.navigate(['']),
-        err => console.log(err)
-      );
+
+    if (!this.signupForm.invalid && !this.signupForm.pending) {
+      //event.preventDefault();
+      const newUser = this.signupForm.getRawValue() as NewUser;
+      this.signUpService
+        .signup(newUser)
+        .subscribe(
+          () => this.router.navigate(['']),
+          err => console.log(err)
+        );
+    }
+
   }
 }
